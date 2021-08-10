@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const httpServer = require("http").createServer()
+const httpServer = require("http").createServer(app)
 const io = require('socket.io')(httpServer, {
   cors: {
     origin: ["http://localhost:3000", "https://go-out-together.vercel.app"]
