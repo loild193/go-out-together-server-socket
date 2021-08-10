@@ -1,14 +1,18 @@
 const express = require('express')
 const app = express()
+require('dotenv').config()
+const cors = require('cors')
+app.use(cors())
+
 const httpServer = require("http").createServer(app)
 const io = require('socket.io')(httpServer, {
-  cors: {
-    // origin: ["http://localhost:3000", "https://go-out-together.vercel.app"]
+	cors: {
+		// origin: ["http://localhost:3000", "https://go-out-together.vercel.app"]
 		// origin: '*'
-		origin: true
+		origin: true,
+		methods: ["GET", "POST"],
   }
 })
-require('dotenv').config()
 
 io.on('connection', (socket) => {
 	// new user come into session
@@ -34,4 +38,4 @@ io.on('connection', (socket) => {
 
 const port = process.env.SERVER_PORT ?? 3001
 // app.listen(port, () => console.log(`Server is running at port ${port}`))
-httpServer.listen(port)
+httpServer.listen(port, () => console.log(`Port ${port}`))
