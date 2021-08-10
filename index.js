@@ -2,18 +2,18 @@ const express = require('express')
 const app = express()
 require('dotenv').config()
 const cors = require('cors')
-app.use(cors())
 
 const httpServer = require("http").createServer(app)
 const io = require('socket.io')(httpServer, {
 	cors: {
 		// origin: ["http://localhost:3000", "https://go-out-together.vercel.app"]
-		origin: `http://localhost:3000`,
+		origin: '*',
 		// origin: true,
 		methods: ["GET", "POST"],
   }
 })
 
+app.use(cors())
 io.on('connection', (socket) => {
 	// new user come into session
 	socket.on('new_user_coming', () => {
