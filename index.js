@@ -1,9 +1,7 @@
 const express = require('express')
 const app = express()
-const http = require('http')
-const server = http.createServer(app)
-const { Server } = require('socket.io')
-const io = new Server(server, {
+const httpServer = require("http").createServer()
+const io = require('socket.io')(httpServer, {
   cors: {
     origin: "http://localhost:3000",
   }
@@ -34,4 +32,4 @@ io.on('connection', (socket) => {
 })
 
 const port = process.env.SERVER_PORT ?? 3001
-server.listen(port, () => console.log(`Server is running at port ${port}`))
+httpServer.listen(port, () => console.log(`Server is running at port ${port}`))
