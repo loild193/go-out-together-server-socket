@@ -11,8 +11,6 @@ const io = new Server(server, {
 require('dotenv').config()
 const cors = require('cors')
 
-app.use(cors())
-
 io.on('connection', (socket) => {
 	// new user come into session
 	socket.on('new_user_coming', () => {
@@ -34,6 +32,8 @@ io.on('connection', (socket) => {
 		io.sockets.emit('refetch_vote')
 	})
 })
+
+app.use(cors())
 
 const port = process.env.SERVER_PORT ?? 3001
 server.listen(port, () => console.log(`Server is running at port ${port}`))
