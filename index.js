@@ -8,6 +8,7 @@ const io = new Server(server, {
     origin: "http://localhost:3000",
   }
 })
+io("http://localhost:3000", { transports: ["websocket"] })
 require('dotenv').config()
 
 io.on('connection', (socket) => {
