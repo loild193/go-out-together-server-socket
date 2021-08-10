@@ -8,8 +8,8 @@ const httpServer = require("http").createServer(app)
 const io = require('socket.io')(httpServer, {
 	cors: {
 		// origin: ["http://localhost:3000", "https://go-out-together.vercel.app"]
-		// origin: '*'
-		origin: true,
+		origin: `http://localhost:3000`,
+		// origin: true,
 		methods: ["GET", "POST"],
   }
 })
