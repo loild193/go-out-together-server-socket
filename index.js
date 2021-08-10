@@ -3,10 +3,9 @@ const app = express()
 const httpServer = require("http").createServer()
 const io = require('socket.io')(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://go-out-together.vercel.app"]
   }
 })
-io("http://localhost:3000", { transports: ["websocket"] })
 require('dotenv').config()
 
 io.on('connection', (socket) => {
@@ -32,4 +31,5 @@ io.on('connection', (socket) => {
 })
 
 const port = process.env.SERVER_PORT ?? 3001
-httpServer.listen(port, () => console.log(`Server is running at port ${port}`))
+app.listen(port, () => console.log(`Server is running at port ${port}`))
+httpServer.listen(8081)
