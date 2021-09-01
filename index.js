@@ -16,28 +16,35 @@ const io = require("socket.io")(httpServer, {
 app.use(cors());
 io.on("connection", (socket) => {
   // new user come into session
-  socket.on("new_user_coming", () => {
-    io.sockets.emit("refetch_sesion_detail");
-  });
+  socket.on("new_user_coming", (sid) => {
+    socket.join(sid);
+    socket.broadcast.emit("refetch_sesion_detail");
 
-  // add new locations
-  socket.on("add_location", () => {
-    io.sockets.emit("refetch_add_location");
-  });
+    // add new locations
+    socket.on("add_location", (sid) => {
+      socket.join(sid);
+      io.to(sid).emit("refetch_add_location");
+    });
 
-  // delete new locations
-  socket.on("delete_location", () => {
-    io.sockets.emit("refetch_delete_location");
-  });
+    // delete new locations
+    socket.on("delete_location", (sid) => {
+      socket.join(sid);
+      io.to(sid).emit("refetch_delete_location");
+    });
 
-  // vote location
-  socket.on("vote", () => {
-    io.sockets.emit("refetch_vote");
-  });
+    // vote location
+    socket.on("vote", (sid) => {
+      socket.join(sid);
+      io.to(sid).emit("refetch_vote");
+    });
 
-  // change bgClassname
-  socket.on("new_bg_image", ({ newBgClassname }) => {
-    io.sockets.emit("change_new_bg_image", newBgClassname);
+    // change bgClassname
+    socket.on("new_bg_image", ({ newBgClassname, sid }) => {
+      socket.join(sid);
+      socket
+        .to(sid)
+        .emit("change_new_bg_image", newBgClassname);
+    });
   });
 });
 
